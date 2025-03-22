@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan History - FoodWise Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-barcode"></i>
+            <span>FoodWise Scanner</span>
+        </div>
+        <div class="nav-links">
+            <a href="scan.html">Scan Items</a>
+            <a href="scan-history.html" class="active">Scan History</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>Scan History</h1>
+            <p>View your recent scanned items</p>
+        </header>
+
+        <section class="scan-history">
+            <div class="history-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search scanned items...">
+                </div>
+                <div class="filter-options">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="fresh-produce">Fresh Produce</option>
+                        <option value="dairy-eggs">Dairy & Eggs</option>
+                        <option value="meat-seafood">Meat & Seafood</option>
+                        <option value="pantry">Pantry</option>
+                    </select>
+                    <select id="dateFilter">
+                        <option value="">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="history-list">
+                <!-- Scan history will be populated here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="scan-history.js"></script>
+</body>
+</html> 

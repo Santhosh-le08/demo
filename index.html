@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodWise - Smart Grocery Inventory Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FoodWise</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="report.html">Report Wastage</a>
+            <a href="#">Settings</a>
+            <div class="auth-links">
+                <a href="login.html" id="loginLink">Login</a>
+                <a href="signup.html" id="signupLink">Sign Up</a>
+                <a href="#" id="logoutLink" style="display: none;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Smart Food Management</h1>
+            <p>Track, organize, and reduce food waste with AI-powered insights</p>
+            <div class="hero-buttons">
+                <button class="primary-btn" onclick="showAddItemModal()">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+                <button class="secondary-btn" onclick="showQuickScanModal()">
+                    <i class="fas fa-barcode"></i> Quick Scan
+                </button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Fresh Food">
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <div class="action-card" onclick="showAddItemModal()">
+            <i class="fas fa-plus-circle"></i>
+            <h3>Add Item</h3>
+            <p>Quickly add new items to your inventory</p>
+        </div>
+        <div class="action-card" onclick="showQuickScanModal()">
+            <i class="fas fa-barcode"></i>
+            <h3>Quick Scan</h3>
+            <p>Scan barcodes to add items instantly</p>
+        </div>
+        <div class="action-card" onclick="showSmartSuggestions()">
+            <i class="fas fa-lightbulb"></i>
+            <h3>AI Insights</h3>
+            <p>Get smart suggestions for your inventory</p>
+        </div>
+        <div class="action-card" onclick="showShoppingList()">
+            <i class="fas fa-shopping-cart"></i>
+            <h3>Shopping List</h3>
+            <p>View your AI-generated shopping list</p>
+        </div>
+    </section>
+
+    <!-- Smart Alerts -->
+    <section class="smart-alerts">
+        <h2><i class="fas fa-bell"></i> Smart Alerts</h2>
+        <div class="alerts-container" id="alertsContainer">
+            <!-- Alerts will be dynamically added here -->
+        </div>
+    </section>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>My Food Inventory</h1>
+            <div class="header-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search items...">
+                </div>
+                <div class="filter-options">
+                    <select id="filterExpiry">
+                        <option value="all">All Items</option>
+                        <option value="expired">Expired</option>
+                        <option value="expiring-soon">Expiring Soon</option>
+                        <option value="good">Good</option>
+                    </select>
+                    <select id="filterCategory">
+                        <option value="all">All Categories</option>
+                        <option value="fresh-produce">Fresh Produce</option>
+                        <option value="dairy-eggs">Dairy & Eggs</option>
+                        <option value="meat-seafood">Meat & Seafood</option>
+                        <option value="pantry">Pantry Items</option>
+                    </select>
+                </div>
+                <button class="add-item-btn" onclick="showAddItemModal()">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </div>
+        </header>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <i class="fas fa-box"></i>
+                <div class="stat-info">
+                    <h3>Total Items</h3>
+                    <p id="totalItems">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="stat-info">
+                    <h3>Expiring Soon</h3>
+                    <p id="expiringSoon">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="stat-info">
+                    <h3>Good Items</h3>
+                    <p id="goodItems">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-line"></i>
+                <div class="stat-info">
+                    <h3>Waste Reduction</h3>
+                    <p id="wasteReduction">0%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Insights -->
+        <section class="ai-insights">
+            <h2><i class="fas fa-robot"></i> AI Insights</h2>
+            <div class="insights-container" id="insightsContainer">
+                <!-- AI insights will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Inventory Grid -->
+        <div class="inventory-grid">
+            <div class="category-section">
+                <h2><i class="fas fa-apple-alt"></i> Fresh Produce</h2>
+                <div class="items-container" id="fresh-produce">
+                    <!-- Items will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2><i class="fas fa-egg"></i> Dairy & Eggs</h2>
+                <div class="items-container" id="dairy-eggs">
+                    <!-- Items will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2><i class="fas fa-drumstick-bite"></i> Meat & Seafood</h2>
+                <div class="items-container" id="meat-seafood">
+                    <!-- Items will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2><i class="fas fa-cookie-bite"></i> Pantry Items</h2>
+                <div class="items-container" id="pantry">
+                    <!-- Items will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAddItemModal()">&times;</span>
+            <h2>Add New Item</h2>
+            <form id="addItemForm">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="fresh-produce">Fresh Produce</option>
+                        <option value="dairy-eggs">Dairy & Eggs</option>
+                        <option value="meat-seafood">Meat & Seafood</option>
+                        <option value="pantry">Pantry Items</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unit</label>
+                    <select id="unit" required>
+                        <option value="kg">Kilograms (kg)</option>
+                        <option value="g">Grams (g)</option>
+                        <option value="l">Liters (L)</option>
+                        <option value="ml">Milliliters (ml)</option>
+                        <option value="pcs">Pieces</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="date" id="expiryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (Optional)</label>
+                    <input type="number" id="price" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="itemImage">Item Image (Optional)</label>
+                    <input type="file" id="itemImage" accept="image/*">
+                </div>
+                <button type="submit" class="submit-btn">Add Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Scan Modal -->
+    <div class="modal" id="quickScanModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeQuickScanModal()">&times;</span>
+            <h2>Quick Scan</h2>
+            <div class="scan-container">
+                <div class="camera-preview" id="cameraPreview">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="scan-instructions">
+                    <p>Position the barcode within the frame</p>
+                    <button class="scan-btn" onclick="startScanning()">
+                        <i class="fas fa-barcode"></i> Start Scanning
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Insights Modal -->
+    <div class="modal" id="aiInsightsModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAIInsightsModal()">&times;</span>
+            <h2>AI Insights</h2>
+            <div class="insights-content" id="insightsContent">
+                <!-- AI insights will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- Add authentication check script -->
+    <script>
+        // Check authentication status
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const loginLink = document.getElementById('loginLink');
+            const signupLink = document.getElementById('signupLink');
+            const logoutLink = document.getElementById('logoutLink');
+
+            if (isLoggedIn) {
+                loginLink.style.display = 'none';
+                signupLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+            } else {
+                loginLink.style.display = 'block';
+                signupLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+            }
+
+            // Handle logout
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

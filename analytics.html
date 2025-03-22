@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodWise - Analytics & Reports</title>
+    <link rel="stylesheet" href="track.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FoodWise</span>
+        </div>
+        <div class="nav-links">
+            <a href="grocery.html">Dashboard</a>
+            <a href="analytics.html" class="active">Analytics</a>
+            <a href="report.html">Report Wastage</a>
+            <a href="about.html">About Us</a>
+            <a href="settings.html">Settings</a>
+            <div class="auth-links">
+                <a href="login.html" id="loginLink">Login</a>
+                <a href="signup.html" id="signupLink">Sign Up</a>
+                <a href="#" id="logoutLink" style="display: none;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>Analytics & Reports</h1>
+            <div class="header-controls">
+                <div class="date-range">
+                    <select id="timeRange">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+                <button class="export-btn" onclick="exportReport()">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </header>
+
+        <div class="analytics-grid">
+            <!-- Waste Reduction Overview -->
+            <div class="analytics-card">
+                <h2>Waste Reduction Overview</h2>
+                <div class="chart-container">
+                    <canvas id="wasteReductionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Category Distribution -->
+            <div class="analytics-card">
+                <h2>Category Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Expiry Trends -->
+            <div class="analytics-card">
+                <h2>Expiry Trends</h2>
+                <div class="chart-container">
+                    <canvas id="expiryTrendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Cost Analysis -->
+            <div class="analytics-card">
+                <h2>Cost Analysis</h2>
+                <div class="chart-container">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Reports Section -->
+        <section class="reports-section">
+            <h2>Detailed Reports</h2>
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>Waste Reduction Summary</h3>
+                    <div class="report-content" id="wasteSummary">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="report-card">
+                    <h3>Category Performance</h3>
+                    <div class="report-content" id="categoryPerformance">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="report-card">
+                    <h3>Expiry Analysis</h3>
+                    <div class="report-content" id="expiryAnalysis">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="analytics.js"></script>
+
+    <!-- Add authentication check script -->
+    <script>
+        // Check authentication status
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const loginLink = document.getElementById('loginLink');
+            const signupLink = document.getElementById('signupLink');
+            const logoutLink = document.getElementById('logoutLink');
+
+            if (isLoggedIn) {
+                loginLink.style.display = 'none';
+                signupLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+            } else {
+                loginLink.style.display = 'block';
+                signupLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+            }
+
+            // Handle logout
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Wastage - FoodWise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .report-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .report-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .report-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+
+        .form-group select[multiple] {
+            height: 120px;
+            padding: 0.5rem;
+        }
+
+        .form-group select[multiple] option {
+            padding: 0.5rem;
+            margin: 2px 0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group select[multiple] option:checked {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .form-group input[type="file"] {
+            padding: 1rem;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="file"]:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .submit-btn i {
+            font-size: 1.2rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-group label::after {
+            content: " *";
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+
+        .form-group label:not([for="cost"]):not([for="purchaseDate"]):not([for="prevention"]):not([for="notes"]):not([for="image"])::after {
+            content: " *";
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+
+        .location-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .report-guidelines {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+        }
+
+        .report-guidelines h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .report-guidelines ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .report-guidelines li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .report-guidelines li i {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .report-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .location-group {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                background-color: #2d2d2d;
+                border-color: #444;
+                color: #fff;
+            }
+
+            .form-group label {
+                color: #fff;
+            }
+
+            .form-group select[multiple] option {
+                background-color: #2d2d2d;
+                color: #fff;
+            }
+
+            .form-group select[multiple] option:checked {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .form-group input[type="file"] {
+                border-color: #444;
+            }
+
+            .form-group input[type="file"]:hover {
+                background-color: rgba(76, 175, 80, 0.1);
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .notification.success {
+            background-color: var(--primary-color);
+        }
+
+        .notification.error {
+            background-color: #e74c3c;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FoodWise</span>
+        </div>
+        <div class="nav-links">
+            <a href="grocery.html">Dashboard</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="report.html" class="active">Report Wastage</a>
+            <a href="about.html">About Us</a>
+            <a href="settings.html">Settings</a>
+            <div class="auth-links">
+                <a href="login.html" id="loginLink">Login</a>
+                <a href="signup.html" id="signupLink">Sign Up</a>
+                <a href="#" id="logoutLink" style="display: none;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>Report Food Wastage</h1>
+            <p>Help us track and reduce food waste by reporting items that were wasted</p>
+        </header>
+
+        <!-- Report Form -->
+        <section class="report-section">
+            <div class="report-form-container">
+                <form id="wasteReportForm" class="report-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" id="itemName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="fresh-produce">Fresh Produce</option>
+                                <option value="dairy-eggs">Dairy & Eggs</option>
+                                <option value="meat-seafood">Meat & Seafood</option>
+                                <option value="pantry">Pantry Items</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity Wasted</label>
+                            <input type="number" id="quantity" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="unit">Unit</label>
+                            <select id="unit" required>
+                                <option value="">Select unit</option>
+                                <option value="kg">Kilograms (kg)</option>
+                                <option value="g">Grams (g)</option>
+                                <option value="l">Liters (L)</option>
+                                <option value="ml">Milliliters (ml)</option>
+                                <option value="pcs">Pieces</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason for Wastage</label>
+                            <select id="reason" required>
+                                <option value="">Select reason</option>
+                                <option value="expired">Expired</option>
+                                <option value="spoiled">Spoiled</option>
+                                <option value="overbought">Overbought</option>
+                                <option value="changed-plans">Changed Plans</option>
+                                <option value="quality-issues">Quality Issues</option>
+                                <option value="storage-problems">Storage Problems</option>
+                                <option value="portion-size">Incorrect Portion Size</option>
+                                <option value="preference">Changed Food Preferences</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cost">Estimated Cost (Optional)</label>
+                            <input type="number" id="cost" min="0" step="0.01" placeholder="Enter cost in your currency">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Storage Location</label>
+                            <select id="location" required>
+                                <option value="">Select location</option>
+                                <option value="refrigerator">Refrigerator</option>
+                                <option value="freezer">Freezer</option>
+                                <option value="pantry">Pantry</option>
+                                <option value="counter">Counter</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchaseDate">Purchase Date (Optional)</label>
+                            <input type="date" id="purchaseDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="disposalMethod">Disposal Method</label>
+                            <select id="disposalMethod" required>
+                                <option value="">Select method</option>
+                                <option value="compost">Compost</option>
+                                <option value="garbage">Garbage</option>
+                                <option value="donation">Donation</option>
+                                <option value="recycling">Recycling</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prevention">Prevention Measures (Optional)</label>
+                            <select id="prevention" multiple>
+                                <option value="better-planning">Better Meal Planning</option>
+                                <option value="proper-storage">Proper Storage</option>
+                                <option value="portion-control">Portion Control</option>
+                                <option value="regular-checks">Regular Inventory Checks</option>
+                                <option value="shopping-list">Using Shopping List</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="notes">Additional Notes (Optional)</label>
+                            <textarea id="notes" rows="3" placeholder="Provide any additional details about the wastage, prevention measures, or suggestions..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="image">Upload Image (Optional)</label>
+                            <input type="file" id="image" accept="image/*">
+                        </div>
+                        <div class="form-group full-width">
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i> Submit Report
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- AI Insights -->
+        <section class="ai-insights">
+            <h2><i class="fas fa-robot"></i> AI Insights</h2>
+            <div class="insights-container">
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h3>Waste Reduction Trend</h3>
+                        <p>Your food waste has decreased by 25% compared to last month. Keep up the good work!</p>
+                        <div class="insight-details">
+                            <span><i class="fas fa-calendar"></i> Last 30 days</span>
+                            <span><i class="fas fa-percentage"></i> 25% reduction</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h3>Common Waste Patterns</h3>
+                        <p>Dairy products and fresh produce are your most frequently wasted items. Consider adjusting your purchase quantities.</p>
+                        <div class="insight-details">
+                            <span><i class="fas fa-milk"></i> Dairy: 40%</span>
+                            <span><i class="fas fa-apple-alt"></i> Produce: 35%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h3>Smart Suggestions</h3>
+                        <p>Based on your waste patterns, try these tips:</p>
+                        <ul class="suggestion-list">
+                            <li>Buy dairy products in smaller quantities</li>
+                            <li>Store produce in proper containers</li>
+                            <li>Use the "First In, First Out" method</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h3>Cost Impact</h3>
+                        <p>Your food waste costs approximately $50 per month. Implementing our suggestions could save you up to $30 monthly.</p>
+                        <div class="insight-details">
+                            <span><i class="fas fa-wallet"></i> Current: $50/month</span>
+                            <span><i class="fas fa-piggy-bank"></i> Potential savings: $30/month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Reports -->
+        <section class="recent-reports">
+            <h2><i class="fas fa-history"></i> Recent Reports</h2>
+            <div class="reports-grid">
+                <div class="report-card">
+                    <div class="report-header">
+                        <h3>Milk</h3>
+                        <span class="report-date">Today</span>
+                    </div>
+                    <div class="report-details">
+                        <p><i class="fas fa-box"></i> 1.5 L</p>
+                        <p><i class="fas fa-tag"></i> Dairy & Eggs</p>
+                        <p><i class="fas fa-exclamation-circle"></i> Expired</p>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="report-header">
+                        <h3>Bananas</h3>
+                        <span class="report-date">Yesterday</span>
+                    </div>
+                    <div class="report-details">
+                        <p><i class="fas fa-box"></i> 0.5 kg</p>
+                        <p><i class="fas fa-tag"></i> Fresh Produce</p>
+                        <p><i class="fas fa-exclamation-circle"></i> Spoiled</p>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="report-header">
+                        <h3>Bread</h3>
+                        <span class="report-date">2 days ago</span>
+                    </div>
+                    <div class="report-details">
+                        <p><i class="fas fa-box"></i> 1 loaf</p>
+                        <p><i class="fas fa-tag"></i> Pantry Items</p>
+                        <p><i class="fas fa-exclamation-circle"></i> Expired</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="report.js"></script>
+    <!-- Add authentication check script -->
+    <script>
+        // Check authentication status
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const loginLink = document.getElementById('loginLink');
+            const signupLink = document.getElementById('signupLink');
+            const logoutLink = document.getElementById('logoutLink');
+
+            if (isLoggedIn) {
+                loginLink.style.display = 'none';
+                signupLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+            } else {
+                loginLink.style.display = 'block';
+                signupLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+            }
+
+            // Handle logout
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html> 

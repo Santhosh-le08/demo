@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insights - FoodWise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>FoodWise</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="report.html">Report Wastage</a>
+            <a href="scan.html">Quick Scan</a>
+            <a href="ai-insights.html" class="active">AI Insights</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>AI Insights & Recommendations</h1>
+            <div class="header-controls">
+                <div class="date-range">
+                    <select id="timeRange">
+                        <option value="week">Last Week</option>
+                        <option value="month">Last Month</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                </div>
+                <button class="export-btn" onclick="exportInsights()">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </header>
+
+        <!-- AI Insights Overview -->
+        <section class="ai-insights-overview">
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Consumption Patterns</h3>
+                    <div class="insight-content">
+                        <p>Based on your consumption patterns:</p>
+                        <ul>
+                            <li>Fresh produce is typically consumed within 5 days</li>
+                            <li>Dairy products last 7-10 days</li>
+                            <li>Pantry items are used within 2-3 weeks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Optimal Quantities</h3>
+                    <div class="insight-content">
+                        <p>Recommended quantities for your household:</p>
+                        <ul>
+                            <li>Fresh produce: 2kg per week</li>
+                            <li>Dairy: 3-4 items per week</li>
+                            <li>Meat: 1-2kg per week</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Waste Reduction</h3>
+                    <div class="insight-content">
+                        <p>Current waste reduction potential:</p>
+                        <ul>
+                            <li>30% reduction in fresh produce waste</li>
+                            <li>20% reduction in dairy waste</li>
+                            <li>15% reduction in meat waste</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Shopping Recommendations</h3>
+                    <div class="insight-content">
+                        <p>Smart shopping suggestions:</p>
+                        <ul>
+                            <li>Buy fresh produce in smaller quantities</li>
+                            <li>Stock up on pantry items during sales</li>
+                            <li>Consider bulk buying for frequently used items</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Analytics -->
+        <section class="detailed-analytics">
+            <h2>Detailed Analytics</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h2><i class="fas fa-chart-bar"></i> Consumption Trends</h2>
+                    <div class="chart-container">
+                        <canvas id="consumptionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h2><i class="fas fa-pie-chart"></i> Category Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h2><i class="fas fa-clock"></i> Expiry Patterns</h2>
+                    <div class="chart-container">
+                        <canvas id="expiryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h2><i class="fas fa-dollar-sign"></i> Cost Analysis</h2>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Recommendations -->
+        <section class="ai-recommendations">
+            <h2>AI-Powered Recommendations</h2>
+            <div class="recommendations-grid">
+                <div class="recommendation-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Meal Planning</h3>
+                    <p>Based on your inventory, here are suggested meals to reduce waste:</p>
+                    <ul>
+                        <li>Use expiring vegetables in a stir-fry</li>
+                        <li>Make a soup with leftover produce</li>
+                        <li>Create a meal plan for the week</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>Shopping List</h3>
+                    <p>AI-generated shopping list based on your consumption patterns:</p>
+                    <ul>
+                        <li>Fresh produce: 2kg mixed vegetables</li>
+                        <li>Dairy: 2L milk, 1 dozen eggs</li>
+                        <li>Pantry: Rice, pasta, canned goods</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Storage Optimization</h3>
+                    <p>Tips to extend food shelf life:</p>
+                    <ul>
+                        <li>Store produce in proper containers</li>
+                        <li>Keep dairy items at the back of the fridge</li>
+                        <li>Use airtight containers for pantry items</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="ai-insights.js"></script>
+</body>
+</html> 

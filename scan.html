@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Scan - FoodWise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-barcode"></i>
+            <span>FoodWise Scanner</span>
+        </div>
+        <div class="nav-links">
+            <a href="scan.html" class="active">Scan Items</a>
+            <a href="scan-history.html">Scan History</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="dashboard-header">
+            <h1>Quick Scan</h1>
+            <p>Scan barcodes to quickly add items to your inventory</p>
+            <a href="add-item.html" class="add-item-btn">
+                <i class="fas fa-plus"></i> Add Item Manually
+            </a>
+        </header>
+
+        <section class="scan-section">
+            <div class="scan-container">
+                <div class="camera-preview">
+                    <i class="fas fa-barcode"></i>
+                </div>
+                <div class="scan-instructions">
+                    <h2>How to Scan</h2>
+                    <p>1. Position the barcode within the camera frame</p>
+                    <p>2. Hold steady for automatic scanning</p>
+                    <p>3. Review and confirm item details</p>
+                </div>
+                <button class="scan-btn" onclick="startScanning()">
+                    <i class="fas fa-camera"></i> Start Scanning
+                </button>
+            </div>
+
+            <div class="scan-history">
+                <h2>Recent Scans</h2>
+                <div class="history-list">
+                    <!-- Recent scans will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Manual Entry Form -->
+        <section class="manual-entry">
+            <h2>Manual Entry</h2>
+            <p>Can't scan? Enter item details manually</p>
+            <form id="manualEntryForm" class="entry-form">
+                <div class="form-group">
+                    <label for="barcode">Barcode Number</label>
+                    <input type="text" id="barcode" placeholder="Enter barcode number">
+                </div>
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="">Select category</option>
+                        <option value="fresh-produce">Fresh Produce</option>
+                        <option value="dairy-eggs">Dairy & Eggs</option>
+                        <option value="meat-seafood">Meat & Seafood</option>
+                        <option value="pantry">Pantry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unit</label>
+                    <select id="unit" required>
+                        <option value="">Select unit</option>
+                        <option value="kg">Kilograms (kg)</option>
+                        <option value="g">Grams (g)</option>
+                        <option value="l">Liters (L)</option>
+                        <option value="ml">Milliliters (ml)</option>
+                        <option value="pcs">Pieces</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="date" id="expiryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (Optional)</label>
+                    <input type="number" id="price" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script src="scan.js"></script>
+</body>
+</html> 
